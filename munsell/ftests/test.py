@@ -40,7 +40,7 @@ class NewVisitorTest(unittest.TestCase):
         # She is invited to enter a munsell color straight away
         inputbox = self.browser.find_element_by_id('id_munsell_entry')
         self.assertEqual(inputbox.get_attribute('placeholder'),
-                         'Enter a munsell color'
+                         'Enter a Munsell color'
                          )
 
         # She types '5YR 4/6'
@@ -51,7 +51,8 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys(Keys.ENTER)
 
         chips = self.browser.find_elements_by_class_name('id_color_chip')
-        self.assertTrue(any(chips.text == '136 83 47' for chip in chips))
+        self.assertTrue(any(chips.text == '136 83 47' for chip in chips),
+                        "RGB conversion did not appear on page")
 
         # Satisfied, she goes back to sleep
         self.fail("Finish the ftests.")
