@@ -4,6 +4,10 @@
     </head>
     <body>
         <h1>Munsell Converter</h1>
-        <input id="id_munsell_entry" placeholder="Enter a Munsell color" />
+        <form method="POST">
+            {% csrf_token %}
+            <input name="munsell_color" id="id_munsell_entry" placeholder="Enter a Munsell color" />
+        </form>
+        <div id="id_rgb_value"></div>
     </body>
 </html>

@@ -50,9 +50,8 @@ class NewVisitorTest(unittest.TestCase):
         # listed for her color
         inputbox.send_keys(Keys.ENTER)
 
-        chips = self.browser.find_elements_by_class_name('id_color_chip')
-        self.assertTrue(any(chips.text == '136 83 47' for chip in chips),
-                        "RGB conversion did not appear on page")
+        value01 = self.browser.find_element_by_id('id_rgb_value').text
+        self.assertIn('136 83 47', value01)
 
         # Satisfied, she goes back to sleep
         self.fail("Finish the ftests.")
