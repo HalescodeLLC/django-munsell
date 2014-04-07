@@ -8,10 +8,10 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', TemplateView.as_view(template_name='base.html')),
+    # url(r'^$', TemplateView.as_view(template_name='base.html')),
 
     # Examples:
-    # url(r'^$', 'munsell.views.home', name='home'),
+    url(r'^$', 'mcolor.views.home_page', name='home_page'),
     # url(r'^munsell/', include('munsell.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
