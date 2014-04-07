@@ -1,6 +1,7 @@
 from selenium import webdriver
 import unittest
 
+
 class NewVisitorTest(unittest.TestCase):
 
     def setUp(self):
@@ -19,7 +20,7 @@ class NewVisitorTest(unittest.TestCase):
         assert 'Munsell' in self.browser.title
 
         # Satisfied, she goes back to sleep
-        self.browser.quit()
+        self.fail("Finish the ftests.")
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
