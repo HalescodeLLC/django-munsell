@@ -1,17 +1,3 @@
-## HueA - 5
-## HueB - YR
-## Value - 4
-## Chroma - 6
-## Nice_Name - Yellowish Red
-## Munsell_Name - 5YR 4/6
-## Sortable_Name - 05YR 4/6
-## R - 0.5333
-## G - 0.3255
-## B - 0.1843
-## dR - 136
-## dG - 83
-## dB - 47
-## Hex - 88532F
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -43,15 +29,15 @@ class NewVisitorTest(unittest.TestCase):
                          'Enter a Munsell color'
                          )
 
-        # She types '5YR 4/6'
-        inputbox.send_keys('5YR 4/6')
+        # She types '2.5Y 8/6'
+        inputbox.send_keys('2.5Y 8/6')
 
         # When she hits enter, the page updates, and now the RGB values are
         # listed for her color
         inputbox.send_keys(Keys.ENTER)
 
         value01 = self.browser.find_element_by_id('id_rgb_value').text
-        self.assertIn('136 83 47', value01)
+        self.assertIn('229 196 123', value01)
 
         # Satisfied, she goes back to sleep
         self.fail("Finish the ftests.")

@@ -8,6 +8,6 @@
             {% csrf_token %}
             <input name="munsell_color" id="id_munsell_entry" placeholder="Enter a Munsell color" />
         </form>
-        <div id="id_rgb_value"></div>
+        <div id="id_rgb_value">{{ rgb_val }}</div>
     </body>
 </html>

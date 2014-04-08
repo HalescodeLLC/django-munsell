@@ -1,4 +1,4 @@
-HueA	HueB	Value	Chroma	Nice_Name	Munsell_Name	Sortable_Name	R	G	B	dR	dG	dB	Hex
+hue_a	hue_b	value	chroma	nice_name	munsell_name	sortable_name	n_r	n_g	n_b	s_r	s_g	s_b	hexval
 0	N	2.5		Black	N 2.5/	00N 2.5/	0.2353	0.2353	0.2353	60	60	60	3C3C3C
 0	N	3		Very Dark Gray	N 3/	00N 3/	0.2824	0.2824	0.2824	72	72	72	484848
 0	N	4		Dark Gray	N 4/	00N 4/	0.3765	0.3765	0.3765	96	96	96	606060
