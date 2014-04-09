@@ -58,8 +58,26 @@ class NewVisitorTest(unittest.TestCase):
         count = self.browser.find_element_by_id('id_match_count').text
         self.assertIn('10', count)
 
+        # Now, she gets lazy and types the entire munsell value as a single string
+        inputbox = self.browser.find_element_by_id('id_munsell_entry')
+        inputbox.send_keys('N2.5')
+
+        inputbox.send_keys(Keys.ENTER)
+
+        count = self.browser.find_element_by_id('id_match_count').text
+        self.assertIn('1', count)
+
+        # Next, she tries to enter a lower case letter to see how it likes it
+        inputbox = self.browser.find_element_by_id('id_munsell_entry')
+        inputbox.send_keys('n')
+
+        inputbox.send_keys(Keys.ENTER)
+
+        count = self.browser.find_element_by_id('id_match_count').text
+        self.assertIn('10', count)
+
+
         # Satisfied, she goes back to sleep
-        self.fail("Finish the ftests.")
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
