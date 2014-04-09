@@ -36,8 +36,27 @@ class NewVisitorTest(unittest.TestCase):
         # listed for her color
         inputbox.send_keys(Keys.ENTER)
 
-        value01 = self.browser.find_element_by_id('id_rgb_value').text
+        value01 = self.browser.find_element_by_class_name('rgb_value').text
         self.assertIn('229 196 123', value01)
+
+        # Excited, she tries a different munsell value: N 2.5
+        inputbox = self.browser.find_element_by_id('id_munsell_entry')
+        inputbox.send_keys('N 2.5')
+
+        inputbox.send_keys(Keys.ENTER)
+
+        value02 = self.browser.find_element_by_class_name('rgb_value').text
+        self.assertIn('60 60 60', value02)
+
+        # Now, she wants to see a listing of ALL the N values
+        ##  There are currently 10 N records in the database
+        inputbox = self.browser.find_element_by_id('id_munsell_entry')
+        inputbox.send_keys('N')
+
+        inputbox.send_keys(Keys.ENTER)
+
+        count = self.browser.find_element_by_id('id_match_count').text
+        self.assertIn('10', count)
 
         # Satisfied, she goes back to sleep
         self.fail("Finish the ftests.")

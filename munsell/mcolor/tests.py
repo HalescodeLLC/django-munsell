@@ -1,3 +1,5 @@
+import logging
+
 from django.core.urlresolvers import resolve
 from django.template.loader import render_to_string
 from django.test import TestCase
@@ -34,7 +36,7 @@ class HomePageTest(TestCase):
 
 class MunsellColorModelTest(TestCase):
 
-    fixtures = ['data.json']
+    fixtures = ['initial_data.json']
 
     def setUp(self):
         #  fixture pk=1
@@ -87,3 +89,9 @@ class MunsellColorModelTest(TestCase):
         self.assertEqual('229', x[0])
         self.assertEqual('196', x[1])
         self.assertEqual('123', x[2])
+
+    def test_N_Hue_colors_are_found_without_trailing_slash(self):
+        mname = 'N 2.5'
+        x = MunsellColor.objects.filter(munsell_name__contains=mname).first()
+        record = MunsellColor.objects.get(pk=1)
+        self.assertEqual(x, record)

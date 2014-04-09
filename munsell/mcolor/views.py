@@ -7,8 +7,10 @@ from .models import MunsellColor
 # Create your views here.
 def home_page(request):
     if request.method == 'POST':
-        color = MunsellColor.objects.get(munsell_name=request.POST['munsell_color'])
-        rgb = color.convert_to_standard_rgb()
-        rgb_val = '%s %s %s' % (rgb[0], rgb[1], rgb[2])
-        return HttpResponse(request, 'mcolor/home.html', {'rgb_val': rgb_val})
+        colors = MunsellColor.objects.filter(munsell_name__contains=request.POST['munsell_color'])
+        rgb_vals = []
+        for color in colors:
+            rgb = color.convert_to_standard_rgb()
+            rgb_vals.append(rgb[0] + ' ' + rgb[1] + ' ' + rgb[2])
+        return render(request, 'mcolor/home.html', {'rgb_vals': rgb_vals})
     return render(request, 'mcolor/home.html')
