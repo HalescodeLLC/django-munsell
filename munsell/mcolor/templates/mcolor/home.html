@@ -8,9 +8,11 @@
             {% csrf_token %}
             <input name="munsell_color" id="id_munsell_entry" placeholder="Enter a Munsell color" />
         </form>
-        <div id="id_match_count">{{ rgb_vals|length }} matches found:</div><br>
+        <div id="id_match_count">{{ rgb_vals|length }} match{{ rgb_vals|length|pluralize:"es" }} found:</div><br>
+
         {% for rgb_val in rgb_vals %}
             <div class="rgb_value">{{ rgb_val }}</div>
         {% endfor %}
+
     </body>
 </html>

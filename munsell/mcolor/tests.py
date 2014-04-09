@@ -22,16 +22,45 @@ class HomePageTest(TestCase):
         expected_html = render_to_string('mcolor/home.html')
         self.assertEqual(response.content.decode(), expected_html)
 
-    # def test_home_page_can_save_a_POST_request(self):
-    #     request = HttpRequest()
-    #     request.method = 'POST'
-    #     request.POST['munsell_color'] = '5YR 4/6'
+    def test_home_page_can_save_a_POST_request(self):
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['munsell_color'] = '2.5YR 4/6'
 
-    #     response = home_page(request)
+        response = home_page(request)
 
-    #     self.assertIn('5YR 4/6', response.content.decode())
-    #     expected_html = render_to_string('mcolor/home.html',
-    #         {'rgb_value': '
+        self.assertIn('1 match found:', response.content.decode())
+        self.assertIn('140 81 54', response.content.decode())
+
+    def test_matches_are_case_insensitive(self):
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['munsell_color'] = '2.5yr 4/6'
+
+        response = home_page(request)
+
+        self.assertIn('1 match found:', response.content.decode())
+        self.assertIn('140 81 54', response.content.decode())
+
+    def test_partial_matches_return_list(self):
+        # self.maxDiff = None
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['munsell_color'] = 'N'
+
+        response = home_page(request)
+
+        self.assertIn('10 matches found:', response.content.decode())
+
+    def test_query_color_does_not_need_whitespace_in_name(self):
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['munsell_color'] = 'N2.5'
+
+        response = home_page(request)
+
+        self.assertIn('1 match found:', response.content.decode())
+        self.assertIn('60 60 60', response.content.decode())
 
 
 class MunsellColorModelTest(TestCase):
@@ -39,23 +68,7 @@ class MunsellColorModelTest(TestCase):
     fixtures = ['initial_data.json']
 
     def setUp(self):
-        #  fixture pk=1
-        # self.color01 = MunsellColor()
-        # self.color01.hue_a = '0'
-        # self.color01.hue_b = 'N'
-        # self.color01.value = '2.5'
-        # self.color01.chroma = ''
-        # self.color01.nice_name = 'Black'
-        # self.color01.munsell_name = 'N 2.5/'
-        # self.color01.sortable_name = '00N 2.5/'
-        # self.color01.n_r = '0.2353'
-        # self.color01.n_g = '0.2353'
-        # self.color01.n_b = '0.2353'
-        # self.color01.s_r = '60'
-        # self.color01.s_g = '60'
-        # self.color01.s_b = '60'
-        # self.color01.hexval = '3C3C3C'
-        # self.color01.save()
+
         #  fixture pk=42
         self.color02 = MunsellColor()
         self.color02.hue_a = '2.5'
@@ -98,18 +111,3 @@ class MunsellColorModelTest(TestCase):
         x = MunsellColor.objects.get(pk=42).convert_to_standard_rgb_single_string()
         self.assertEqual('229 196 123', x)
 
-    def test_N_Hue_colors_are_found_without_trailing_slash(self):
-        mname = 'N 2.5'
-        x = MunsellColor.objects.get(sortable_name__icontains=mname.replace(' ',''))
-        record = MunsellColor.objects.get(pk=1)
-        self.assertEqual(x, record)
-
-    def test_partial_matches_return_list(self):
-        mname = 'N'
-        x = MunsellColor.objects.filter(sortable_name__icontains=mname.replace(' ','')).count()
-        self.assertEqual(10, x)
-
-    def test_query_color_does_not_need_whitespace_in_name(self):
-        mname = 'N2.5'
-        x = MunsellColor.objects.filter(sortable_name__icontains=mname.replace(' ','')).count()
-        self.assertEqual(1, x)
