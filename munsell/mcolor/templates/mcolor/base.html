@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>Munsell Converter</title>
+    </head>
+    <body>
+        <h1>{% block header_text %}{% endblock %}</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input name="munsell_color" id="id_munsell_entry" placeholder="Enter a Munsell color" />
+        </form>
+        
+        {% block results %}
+            <div id="id_match_count">{{ rgb_vals|length }} match{{ rgb_vals|length|pluralize:"es" }} found:</div><br>
+
+            <table id="id_conversion_table">
+            {% for color in colors %}
+                <tr>
+                    <td>{{ color.munsell_name }}</td>
+                    <td>{{ color.nice_name }}</td>
+                    <td>{{ color.convert_to_standard_rgb_single_string }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        {% endblock %}
+
+    </body>
+</html>
