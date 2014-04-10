@@ -10,19 +10,7 @@
             <input name="munsell_color" id="id_munsell_entry" placeholder="Enter a Munsell color" />
         </form>
         
-        {% block results %}
-            <div id="id_match_count">{{ rgb_vals|length }} match{{ rgb_vals|length|pluralize:"es" }} found:</div><br>
-
-            <table id="id_conversion_table">
-            {% for color in colors %}
-                <tr>
-                    <td>{{ color.munsell_name }}</td>
-                    <td>{{ color.nice_name }}</td>
-                    <td>{{ color.convert_to_standard_rgb_single_string }}</td>
-                </tr>
-            {% endfor %}
-            </table>
-        {% endblock %}
+        {% block results %}{% endblock %}
 
     </body>
 </html>
