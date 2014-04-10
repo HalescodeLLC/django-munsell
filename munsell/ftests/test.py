@@ -1,10 +1,10 @@
-
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import unittest
+
+from django.test import LiveServerTestCase
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -13,10 +13,20 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_for_row_in_conversion_table(self, row_text):
+        table = self.browser.find_element_by_id('id_conversion_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
+
+    def check_for_correct_number_of_results(self, expected_count):
+        expected_count = str(expected_count)
+        count = self.browser.find_element_by_id('id_match_count').text
+        self.assertIn(expected_count, count)
+
     def test_can_convert_a_munsell_color(self):
         # Nina has heard about a cool new online tool that converts Munsell
-        # colors to RGB values.  She goes to the homepage:
-        self.browser.get('http://localhost:8000')
+        # colors to RGB and HEX values.  She goes to the homepage:
+        self.browser.get(self.live_server_url)
 
         # She notices the page title and header mention Munsell colors
         assert 'Munsell' in self.browser.title
@@ -32,52 +42,36 @@ class NewVisitorTest(unittest.TestCase):
         # She types '2.5Y 8/6'
         inputbox.send_keys('2.5Y 8/6')
 
-        # When she hits enter, the page updates, and now the RGB values are
-        # listed for her color
+        # When she hits enter, the page updates, and now a single munsell color,
+        #  name, and RGB values are listed for her color
         inputbox.send_keys(Keys.ENTER)
 
-        value01 = self.browser.find_element_by_class_name('rgb_value').text
-        self.assertIn('229 196 123', value01)
+        self.check_for_correct_number_of_results(1)
+        self.check_for_row_in_conversion_table('2.5Y 8/6 Yellow 229 196 123')
 
         # Excited, she tries a different munsell value: N 2.5
         inputbox = self.browser.find_element_by_id('id_munsell_entry')
-        inputbox.send_keys('N 2.5')
+        inputbox.send_keys('N 2.5\n')
 
-        inputbox.send_keys(Keys.ENTER)
-
-        value02 = self.browser.find_element_by_class_name('rgb_value').text
-        self.assertIn('60 60 60', value02)
+        self.check_for_row_in_conversion_table('N 2.5 Black 60 60 60')
 
         # Now, she wants to see a listing of ALL the N values
         ##  There are currently 10 N records in the database
         inputbox = self.browser.find_element_by_id('id_munsell_entry')
-        inputbox.send_keys('N')
+        inputbox.send_keys('N\n')
 
-        inputbox.send_keys(Keys.ENTER)
-
-        count = self.browser.find_element_by_id('id_match_count').text
-        self.assertIn('10', count)
+        self.check_for_correct_number_of_results(10)
 
         # Now, she gets lazy and types the entire munsell value as a single string
         inputbox = self.browser.find_element_by_id('id_munsell_entry')
-        inputbox.send_keys('N2.5')
+        inputbox.send_keys('N2.5\n')
 
-        inputbox.send_keys(Keys.ENTER)
-
-        count = self.browser.find_element_by_id('id_match_count').text
-        self.assertIn('1', count)
+        self.check_for_correct_number_of_results(1)
 
         # Next, she tries to enter a lower case letter to see how it likes it
         inputbox = self.browser.find_element_by_id('id_munsell_entry')
-        inputbox.send_keys('n')
+        inputbox.send_keys('n\n')
 
-        inputbox.send_keys(Keys.ENTER)
-
-        count = self.browser.find_element_by_id('id_match_count').text
-        self.assertIn('10', count)
-
+        self.check_for_correct_number_of_results(10)
 
         # Satisfied, she goes back to sleep
-
-if __name__ == '__main__':
-    unittest.main(warnings='ignore')
