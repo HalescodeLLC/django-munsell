@@ -15,7 +15,7 @@ class NewVisitorTest(unittest.TestCase):
 
     def test_can_convert_a_munsell_color(self):
         # Nina has heard about a cool new online tool that converts Munsell
-        # colors to RGB and HEX values.  She goes to the homepage:
+        # colors to RGB values.  She goes to the homepage:
         self.browser.get('http://localhost:8000')
 
         # She notices the page title and header mention Munsell colors
