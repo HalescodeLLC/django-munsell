@@ -1,10 +1,10 @@
-
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import unittest
+
+from django.test import LiveServerTestCase
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -26,7 +26,7 @@ class NewVisitorTest(unittest.TestCase):
     def test_can_convert_a_munsell_color(self):
         # Nina has heard about a cool new online tool that converts Munsell
         # colors to RGB and HEX values.  She goes to the homepage:
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
 
         # She notices the page title and header mention Munsell colors
         assert 'Munsell' in self.browser.title
@@ -42,19 +42,18 @@ class NewVisitorTest(unittest.TestCase):
         # She types '2.5Y 8/6'
         inputbox.send_keys('2.5Y 8/6')
 
-        # When she hits enter, the page updates, and now the RGB values are
-        # listed for her color
+        # When she hits enter, the page updates, and now a single munsell color,
+        #  name, and RGB values are listed for her color
         inputbox.send_keys(Keys.ENTER)
 
-        self.check_for_row_in_conversion_table('229 196 123')
+        self.check_for_correct_number_of_results(1)
+        self.check_for_row_in_conversion_table('2.5Y 8/6 Yellow 229 196 123')
 
         # Excited, she tries a different munsell value: N 2.5
         inputbox = self.browser.find_element_by_id('id_munsell_entry')
         inputbox.send_keys('N 2.5\n')
 
-        # inputbox.send_keys(Keys.ENTER)
-
-        self.check_for_row_in_conversion_table('60 60 60')
+        self.check_for_row_in_conversion_table('N 2.5 Black 60 60 60')
 
         # Now, she wants to see a listing of ALL the N values
         ##  There are currently 10 N records in the database
@@ -76,6 +75,3 @@ class NewVisitorTest(unittest.TestCase):
         self.check_for_correct_number_of_results(10)
 
         # Satisfied, she goes back to sleep
-
-if __name__ == '__main__':
-    unittest.main(warnings='ignore')

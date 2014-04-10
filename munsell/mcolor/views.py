@@ -12,5 +12,5 @@ def home_page(request):
         for color in colors:
             rgb = color.convert_to_standard_rgb_single_string()
             rgb_vals.append(rgb)
-        return render(request, 'mcolor/home.html', {'rgb_vals': rgb_vals})
+        return render(request, 'mcolor/home.html', {'rgb_vals': rgb_vals, 'colors': colors})
     return render(request, 'mcolor/home.html')

@@ -19,6 +19,9 @@ class MunsellColor(models.Model):
     s_b = models.CharField(max_length=4)
     hexval = models.CharField(max_length=8)
 
+    class Meta:
+        ordering = ['sortable_name']
+
     def convert_to_normalized_rgb(self):
         return [self.n_r, self.n_g, self.n_b]
 

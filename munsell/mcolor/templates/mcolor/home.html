@@ -11,10 +11,14 @@
         <div id="id_match_count">{{ rgb_vals|length }} match{{ rgb_vals|length|pluralize:"es" }} found:</div><br>
 
         <table id="id_conversion_table">
-        {% for rgb_val in rgb_vals %}
-            <tr><td>{{ rgb_val }}</td></tr>
+        {% for color in colors %}
+            <tr>
+                <td>{{ color.munsell_name }}</td>
+                <td>{{ color.nice_name }}</td>
+                <td>{{ color.convert_to_standard_rgb_single_string }}</td>
+            </tr>
         {% endfor %}
-    </table>
+        </table>
 
     </body>
 </html>
