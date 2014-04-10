@@ -13,6 +13,16 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_for_row_in_conversion_table(self, row_text):
+        table = self.browser.find_element_by_id('id_conversion_table').text
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
+
+    def check_for_correct_number_of_results(self, expected_count):
+        expected_count = str(expected_count)
+        count = self.browser.find_element_by_id('id_match_count').text
+        self.assertIn(expected_count, count)
+
     def test_can_convert_a_munsell_color(self):
         # Nina has heard about a cool new online tool that converts Munsell
         # colors to RGB and HEX values.  She goes to the homepage:
@@ -36,46 +46,34 @@ class NewVisitorTest(unittest.TestCase):
         # listed for her color
         inputbox.send_keys(Keys.ENTER)
 
-        value01 = self.browser.find_element_by_class_name('rgb_value').text
-        self.assertIn('229 196 123', value01)
+        self.check_for_row_in_conversion_table('229 196 123')
 
         # Excited, she tries a different munsell value: N 2.5
         inputbox = self.browser.find_element_by_id('id_munsell_entry')
-        inputbox.send_keys('N 2.5')
+        inputbox.send_keys('N 2.5\n')
 
-        inputbox.send_keys(Keys.ENTER)
+        # inputbox.send_keys(Keys.ENTER)
 
-        value02 = self.browser.find_element_by_class_name('rgb_value').text
-        self.assertIn('60 60 60', value02)
+        self.check_for_row_in_conversion_table('60 60 60')
 
         # Now, she wants to see a listing of ALL the N values
         ##  There are currently 10 N records in the database
         inputbox = self.browser.find_element_by_id('id_munsell_entry')
-        inputbox.send_keys('N')
+        inputbox.send_keys('N\n')
 
-        inputbox.send_keys(Keys.ENTER)
-
-        count = self.browser.find_element_by_id('id_match_count').text
-        self.assertIn('10', count)
+        self.check_for_correct_number_of_results(10)
 
         # Now, she gets lazy and types the entire munsell value as a single string
         inputbox = self.browser.find_element_by_id('id_munsell_entry')
-        inputbox.send_keys('N2.5')
+        inputbox.send_keys('N2.5\n')
 
-        inputbox.send_keys(Keys.ENTER)
-
-        count = self.browser.find_element_by_id('id_match_count').text
-        self.assertIn('1', count)
+        self.check_for_correct_number_of_results(1)
 
         # Next, she tries to enter a lower case letter to see how it likes it
         inputbox = self.browser.find_element_by_id('id_munsell_entry')
-        inputbox.send_keys('n')
+        inputbox.send_keys('n\n')
 
-        inputbox.send_keys(Keys.ENTER)
-
-        count = self.browser.find_element_by_id('id_match_count').text
-        self.assertIn('10', count)
-
+        self.check_for_correct_number_of_results(10)
 
         # Satisfied, she goes back to sleep
 
