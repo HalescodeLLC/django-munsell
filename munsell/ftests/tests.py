@@ -47,13 +47,13 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys(Keys.ENTER)
 
         self.check_for_correct_number_of_results(1)
-        self.check_for_row_in_conversion_table('2.5Y 8/6 Yellow 229 196 123')
+        self.check_for_row_in_conversion_table('2.5Y 8/6 Yellow 229, 196, 123')
 
         # Excited, she tries a different munsell value: N 2.5
         inputbox = self.browser.find_element_by_id('id_munsell_entry')
         inputbox.send_keys('N 2.5\n')
 
-        self.check_for_row_in_conversion_table('N 2.5 Black 60 60 60')
+        self.check_for_row_in_conversion_table('N 2.5 Black 60, 60, 60')
 
         # Now, she wants to see a listing of ALL the N values
         ##  There are currently 10 N records in the database

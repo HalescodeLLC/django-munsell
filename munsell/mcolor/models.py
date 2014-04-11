@@ -26,13 +26,13 @@ class MunsellColor(models.Model):
         return [self.n_r, self.n_g, self.n_b]
 
     def convert_to_normalized_rgb_single_string(self):
-        return '%s %s %s' % (self.n_r, self.n_g, self.n_b)
+        return '%s, %s, %s' % (self.n_r, self.n_g, self.n_b)
 
     def convert_to_standard_rgb(self):
         return [self.s_r, self.s_g, self.s_b]
 
     def convert_to_standard_rgb_single_string(self):
-        return '%s %s %s' % (self.s_r, self.s_g, self.s_b)
+        return '%s, %s, %s' % (self.s_r, self.s_g, self.s_b)
 
     def __str__(self):
         return self.munsell_name

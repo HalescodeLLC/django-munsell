@@ -29,8 +29,8 @@ class HomePageTest(TestCase):
 
         response = home_page(request)
 
-        self.assertIn('1 match found:', response.content.decode())
-        self.assertIn('140 81 54', response.content.decode())
+        self.assertIn('1 match found for 2.5YR 4/6', response.content.decode())
+        self.assertIn('140, 81, 54', response.content.decode())
 
     def test_matches_are_case_insensitive(self):
         request = HttpRequest()
@@ -39,8 +39,8 @@ class HomePageTest(TestCase):
 
         response = home_page(request)
 
-        self.assertIn('1 match found:', response.content.decode())
-        self.assertIn('140 81 54', response.content.decode())
+        self.assertIn('1 match found for 2.5yr 4/6', response.content.decode())
+        self.assertIn('140, 81, 54', response.content.decode())
 
     def test_partial_matches_return_list(self):
         # self.maxDiff = None
@@ -50,7 +50,7 @@ class HomePageTest(TestCase):
 
         response = home_page(request)
 
-        self.assertIn('10 matches found:', response.content.decode())
+        self.assertIn('10 matches found for N', response.content.decode())
 
     def test_query_color_does_not_need_whitespace_in_name(self):
         request = HttpRequest()
@@ -59,8 +59,8 @@ class HomePageTest(TestCase):
 
         response = home_page(request)
 
-        self.assertIn('1 match found:', response.content.decode())
-        self.assertIn('60 60 60', response.content.decode())
+        self.assertIn('1 match found for N2.5', response.content.decode())
+        self.assertIn('60, 60, 60', response.content.decode())
 
 
 class MunsellColorModelTest(TestCase):
@@ -99,7 +99,7 @@ class MunsellColorModelTest(TestCase):
 
     def test_returns_normalized_RGB_single_string(self):
         x = MunsellColor.objects.get(pk=42).convert_to_normalized_rgb_single_string()
-        self.assertEqual('0.898 0.7686 0.4824', x)
+        self.assertEqual('0.898, 0.7686, 0.4824', x)
 
     def test_returns_standard_RGB_components(self):
         x = MunsellColor.objects.get(pk=42).convert_to_standard_rgb()
@@ -109,5 +109,5 @@ class MunsellColorModelTest(TestCase):
 
     def test_returns_standard_RGB_single_string(self):
         x = MunsellColor.objects.get(pk=42).convert_to_standard_rgb_single_string()
-        self.assertEqual('229 196 123', x)
+        self.assertEqual('229, 196, 123', x)
 
