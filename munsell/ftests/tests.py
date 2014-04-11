@@ -31,12 +31,12 @@ class NewVisitorTest(LiveServerTestCase):
         # She notices the page title and header mention Munsell colors
         assert 'Munsell' in self.browser.title
         header_text = self.browser.find_element_by_tag_name('h1').text
-        self.assertIn('Munsell', header_text)
+        self.assertIn('MunVerter', header_text)
 
         # She is invited to enter a munsell color straight away
         inputbox = self.browser.find_element_by_id('id_munsell_entry')
         self.assertEqual(inputbox.get_attribute('placeholder'),
-                         'Enter a Munsell color'
+                         'Enter a Munsell Color'
                          )
 
         # She types '2.5Y 8/6'
