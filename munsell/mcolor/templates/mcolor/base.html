@@ -1,16 +1,49 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
     <head>
         <title>Munsell Converter</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="/static/base.css" rel="stylesheet" media="screen">
     </head>
+
     <body>
-        <h1>{% block header_text %}{% endblock %}</h1>
-
-        <form method="POST">
-            {% csrf_token %}
-            <input name="munsell_color" id="id_munsell_entry" placeholder="Enter a Munsell color" />
-        </form>
-        
-        {% block results %}{% endblock %}
-
+        <div class="container">
+            <div class="row">
+                <!-- <div class="col&#45;md&#45;8 col&#45;md&#45;offset&#45;2 well"> -->
+                <div class="col-md-12 well">
+                    <div class="text-center">
+                        <h1>{% block header_text %}{% endblock %}</h1>
+                        <br>
+                        <form class="form-inline" role="form" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label class="sr-only" for="id_munsell_entry">Munsell Color To Convert</label>
+                                    <input class="form-control input-lg" name="munsell_color" id="id_munsell_entry" placeholder="Enter a Munsell color" />
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" name="_fuzzy_match" id="id_fuzzy_btn" class="btn btn-primary btn-lg">Fuzzy Match</button>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" name="_exact_match" id="id_exact_btn" class="btn btn-default btn-lg">Exact Match</button>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div>
+                        {% block results %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     </body>
+
 </html>

@@ -68,11 +68,38 @@ class NewVisitorTest(LiveServerTestCase):
 
         self.check_for_correct_number_of_results(1)
 
-        # Next, she tries to enter a lower case letter to see how it likes it
+        # Next, she tries to enter a lower case letter to see how it likes that
         inputbox = self.browser.find_element_by_id('id_munsell_entry')
         inputbox.send_keys('n\n')
 
         self.check_for_correct_number_of_results(10)
+
+        # She notices there are two different buttons beside the input box
+        # One button says Fuzzy Match and the other says Exact Match
+        fuzzy_button = self.browser.find_element_by_id('id_fuzzy_btn')
+        self.assertIn('Fuzzy Match', fuzzy_button.text)
+        exact_button = self.browser.find_element_by_id('id_exact_btn')
+        self.assertIn('Exact Match', exact_button.text)
+
+        # Curious, she enters a munsell name she knows and loves
+        inputbox = self.browser.find_element_by_id('id_munsell_entry')
+        inputbox.send_keys('5YR 4/6')
+        
+        # She decides to try the fuzzy match first, she guesses that any munsell
+        # color with a matching set of characters will appear in her results
+        fuzzy_button.send_keys(Keys.ENTER)
+
+        ## there are currently 3 matching munell colors in the database
+        self.check_for_correct_number_of_results(3)
+        
+        # Next she decides to try the exact match, this time she expects a single result
+        exact_button = self.browser.find_element_by_id('id_exact_btn')
+        inputbox = self.browser.find_element_by_id('id_munsell_entry')
+        inputbox.send_keys('5YR 4/6')
+
+        exact_button.send_keys(Keys.ENTER)
+
+        self.check_for_correct_number_of_results(1)
 
         # Satisfied, she goes back to sleep
 
@@ -82,6 +109,6 @@ class NewVisitorTest(LiveServerTestCase):
         self.browser.get(self.live_server_url)
         self.browser.set_window_size(1024, 768)
 
-        # She notices the input box is nicely centered
-        inputbox = self.browser.find_element_by_id('id_munsell_entry')
-        self.assertAlmostEqual(inputbox.location['x'] + inputbox.size['width'] / 2, 512, delta=3)
+        # She notices the header is nicely centered
+        header_title = self.browser.find_element_by_tag_name('h1')
+        self.assertAlmostEqual(header_title.location['x'] + header_title.size['width'] / 2, 512, delta=3)
