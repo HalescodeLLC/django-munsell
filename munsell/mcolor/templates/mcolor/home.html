@@ -1,6 +1,6 @@
 {% extends 'mcolor/base.html' %}
 
-{% block header_text %}Munsell Converter{% endblock %}
+{% block header_text %}MunVerter{% endblock %}
 
 {% block extra_css %}
     <link href="/static/css/footable.core.css" rel="stylesheet" media="screen">
@@ -12,8 +12,8 @@
         <div class="panel-heading text-center">
             <div id="id_match_count">{{ colors|length }} match{{ colors|length|pluralize:"es" }} found {% if query_color %}for {{ query_color }}{% endif %}</div>
         </div>
-        <div class="panel-body">
 
+        <div class="panel-body">
             <table class="footable table" id="id_conversion_table">
                 <thead>
                     <tr>
@@ -21,7 +21,7 @@
                         <th style="padding-left: 15px;">Munsell Color</th>
                         <th data-hide="phone">Name</th>
                         <th data-hide="phone">RGB</th>
-                        <th data-hide="phone,tablet">RGB (0-1)</th>
+                        <th data-hide="phone,tablet" data-ignore="true">RGB (0-1)</th>
                         <th data-hide="phone,tablet">Hex</th>
                     </tr>
                 </thead>
@@ -36,7 +36,6 @@
                     </tr>
                 {% endfor %}
             </table>
-
         </div>
     </div>
 {% endif %}
