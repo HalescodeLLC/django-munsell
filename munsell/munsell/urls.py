@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 
     # Examples:
     url(r'^$', 'mcolor.views.home_page', name='home_page'),
+    url(r'^results/$', 'mcolor.views.results_page', name='results'),
     # url(r'^munsell/', include('munsell.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

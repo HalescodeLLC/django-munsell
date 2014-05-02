@@ -16,7 +16,7 @@
                     <div class="text-center">
                         <h1>{% block header_text %}{% endblock %}</h1>
                         <br>
-                        <form class="form-inline" role="form" method="POST">
+                        <form class="form-inline" role="form" action={% url "results" %}  method="POST">
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <label class="sr-only" for="id_munsell_entry">Munsell Color To Convert</label>
@@ -35,9 +35,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <div>
+                        {% block info %}{% endblock %}
                         {% block results %}{% endblock %}
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="text-center footer">
+                <p>&copy; <a href="http://halescode.com">Halescode</a> {% now "Y" %}</p>
             </div>
         </div>
 

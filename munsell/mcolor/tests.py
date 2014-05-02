@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from django.test import TestCase
 from django.http import HttpRequest
 
-from .views import home_page
+from .views import home_page, results_page
 from .models import MunsellColor
 
 
@@ -27,7 +27,7 @@ class HomePageTest(TestCase):
         request.method = 'POST'
         request.POST['munsell_color'] = '2.5YR 4/6'
 
-        response = home_page(request)
+        response = results_page(request)
 
         self.assertIn('1 match found for 2.5YR 4/6', response.content.decode())
         self.assertIn('140, 81, 54', response.content.decode())
@@ -37,7 +37,7 @@ class HomePageTest(TestCase):
         request.method = 'POST'
         request.POST['munsell_color'] = '2.5yr 4/6'
 
-        response = home_page(request)
+        response = results_page(request)
 
         self.assertIn('1 match found for 2.5yr 4/6', response.content.decode())
         self.assertIn('140, 81, 54', response.content.decode())
@@ -48,7 +48,7 @@ class HomePageTest(TestCase):
         request.method = 'POST'
         request.POST['munsell_color'] = 'N'
 
-        response = home_page(request)
+        response = results_page(request)
 
         self.assertIn('10 matches found for N', response.content.decode())
 
@@ -57,7 +57,7 @@ class HomePageTest(TestCase):
         request.method = 'POST'
         request.POST['munsell_color'] = 'N2.5'
 
-        response = home_page(request)
+        response = results_page(request)
 
         self.assertIn('1 match found for N2.5', response.content.decode())
         self.assertIn('60, 60, 60', response.content.decode())

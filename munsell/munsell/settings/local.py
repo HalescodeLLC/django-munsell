@@ -2,9 +2,24 @@
 
 from __future__ import absolute_import
 
+from os import environ
 from os.path import join, normpath
 
 from .base import *
+
+
+# Normally you should not import ANYTHING from Django directly
+# into your settings, but ImproperlyConfigured is an exception.
+from django.core.exceptions import ImproperlyConfigured
+
+
+def get_env_setting(setting):
+    """ Get the environment setting or return exception """
+    try:
+        return environ[setting]
+    except KeyError:
+        error_msg = "Set the %s env variable" % setting
+        raise ImproperlyConfigured(error_msg)
 
 
 ########## DEBUG CONFIGURATION
@@ -27,9 +42,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'munsell',
-        'USER': 'munsell',
-        'PASSWORD': 'munsell',
+        'NAME': get_env_setting('MUNSELL_DB_NAME'),
+        'USER': get_env_setting('MUNSELL_DB_USER'),
+        'PASSWORD': get_env_setting('MUNSELL_DB_PASS'),
         'HOST': '',
         'PORT': '',
     }
