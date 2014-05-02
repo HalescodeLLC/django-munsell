@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-md-12 well">
                     <div class="text-center">
-                        <h1>{% block header_text %}{% endblock %}</h1>
+                        <h1><a href="/">{% block header_text %}{% endblock %}</a></h1>
                         <br>
                         <form class="form-inline" role="form" action={% url "results" %}  method="POST">
                                 {% csrf_token %}
@@ -51,7 +51,7 @@
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <!-- Latest compiled and minified JavaScript -->
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        {# <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script> #}
         {% block extra_scripts %}{% endblock %}
         <!-- END SCRIPTS -->
         

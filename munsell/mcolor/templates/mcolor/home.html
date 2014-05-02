@@ -9,11 +9,36 @@
 {% block info %}
 <div class="panel panel-default">    
     <div class="panel-heading text-center">
-        <div id="id_match_count">{{ colors|length }} match{{ colors|length|pluralize:"es" }} found {% if query_color %}for {{ query_color }}{% endif %}</div>
+        <h4>Munsell Color Conversion For Designers</h4>
     </div>
 
     <div class="panel-body">
-        info block is here bitches
+        <div>
+            <p class="lead">What's this?</p>
+            <p>Given all or part of a Munsell Color, Munverter will return the offical name, RGB and hexadecimal 
+            values. Munverter contains mostly soil colors at this point making it particularly useful to 
+            Archaeologists, Soil Scientists, etc.  The eventual goal is to create a complete reference, but we
+            aren't there yet. If you find a bug or think of something else you'd like it to do, you can 
+            <a href="http://halescode.com/#contact">contact us.</a> 
+            <p class="lead">How do I use it?</p>
+            <p>All you have to do is type your munsell color in the box, then click on one of the match buttons.  Here are a couple of entry examples
+            (although if you click the <em>Exact Match</em> button only the first two will return anything. More 
+            on that later):</p>
+            <ul>
+                <li>5yr 4/6</li>
+                <li>N 5</li>
+                <li>5y</li>
+                <li>n</li>
+            </ul>
+            <p class="lead">What's the difference between Fuzzy and Exact searches?</p>
+            <p>The <em>Fuzzy Match</em> button will look for any munsell color that contains whatever you've entered in the search box.
+            The <em>Exact Match</em> button is far more selective and will only return perfect matches.</p>
+            <p class="lead">Why didn't it work?</p>
+            <p>If you're sure you've entered a valid munsell color (and not the word 'dog' or something) but
+            no results were returned, we probably haven't added it yet. If you want us to
+            add your color, simply <a href="http://halescode.com/#contact">send us</a> the Munsell Color (5YR 5/4) and it's offical name ('Reddish Brown') and
+            we'll add it to the database!</p>
+        </div>
     </div>
 </div>
 
