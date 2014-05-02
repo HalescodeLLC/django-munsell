@@ -116,4 +116,4 @@ class NewVisitorTest(LiveServerTestCase):
 
         # She notices the header is nicely centered
         header_title = self.browser.find_element_by_tag_name('h1')
-        self.assertAlmostEqual(header_title.location['x'] + header_title.size['width'] / 2, 512, delta=3)
+        self.assertAlmostEqual(header_title.location['x'] + header_title.size['width'] / 2, 512, delta=8)
