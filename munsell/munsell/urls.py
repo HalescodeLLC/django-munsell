@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.conf import settings
 from django.views.generic import TemplateView
+from django.views.decorators.cache import cache_page
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -11,7 +12,7 @@ urlpatterns = patterns('',
     # url(r'^$', TemplateView.as_view(template_name='base.html')),
 
     # Examples:
-    url(r'^$', 'mcolor.views.home_page', name='home_page'),
+    url(r'^$', cache_page(60*15)('mcolor.views.home_page'), name='home_page'),
     url(r'^results/$', 'mcolor.views.results_page', name='results'),
     # url(r'^munsell/', include('munsell.foo.urls')),
 

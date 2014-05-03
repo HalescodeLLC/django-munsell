@@ -51,17 +51,30 @@ SERVER_EMAIL = EMAIL_HOST_USER
 ########## END EMAIL CONFIGURATION
 
 ########## DATABASE CONFIGURATION
-DATABASES = {}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': get_env_setting('MUNVERTER_DB_NAME'),
+        'USER': get_env_setting('MUNVERTER_DB_USER'),
+        'PASSWORD': get_env_setting('MUNVERTER_DB_PASS'),
+        'HOST': '',
+        'PORT': '',
+    }
+} 
 ########## END DATABASE CONFIGURATION
 
 
 ########## CACHE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#caches
-CACHES = {}
+CACHES = {
+    'default': {
+        'BACKEND':'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }        
+}
 ########## END CACHE CONFIGURATION
-
 
 ########## SECRET CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = get_env_setting('SECRET_KEY')
+SECRET_KEY = get_env_setting('MUNVERTER_SECRET_KEY')
 ########## END SECRET CONFIGURATION
