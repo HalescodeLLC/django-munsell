@@ -4,3 +4,5 @@
 
 gunicorn==0.17.4
 python-memcached==1.53
+newrelic==2.18.1.15
+setproctitle==1.1.8

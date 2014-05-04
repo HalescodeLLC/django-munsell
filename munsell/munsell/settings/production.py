@@ -21,8 +21,10 @@ def get_env_setting(setting):
 
 ########## HOST CONFIGURATION
 # See: https://docs.djangoproject.com/en/1.5/releases/1.5/#allowed-hosts-required-in-production
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['munverter.com']
 ########## END HOST CONFIGURATION
+
+DEBUG = True
 
 ########## EMAIL CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
@@ -56,7 +58,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': get_env_setting('MUNVERTER_DB_NAME'),
         'USER': get_env_setting('MUNVERTER_DB_USER'),
-        'PASSWORD': get_env_setting('MUNVERTER_DB_PASS'),
+        'PASSWORD': get_env_setting('MUNVERTER_DB_PASSWORD'),
         'HOST': '',
         'PORT': '',
     }

@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     # url(r'^$', TemplateView.as_view(template_name='base.html')),
 
     # Examples:
-    url(r'^$', cache_page(60*15)('mcolor.views.home_page'), name='home_page'),
+    url(r'^$', 'mcolor.views.home_page', name='home_page'),
     url(r'^results/$', 'mcolor.views.results_page', name='results'),
     # url(r'^munsell/', include('munsell.foo.urls')),
 
@@ -26,8 +26,8 @@ urlpatterns = patterns('',
 # Uncomment the next line to serve media files in dev.
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns += patterns('',
-                            url(r'^__debug__/', include(debug_toolbar.urls)),
-                            )
+# if settings.DEBUG:
+#     import debug_toolbar
+#     urlpatterns += patterns('',
+#                             url(r'^__debug__/', include(debug_toolbar.urls)),
+#                             )

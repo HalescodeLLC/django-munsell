@@ -1,0 +1,18 @@
+body {
+    /* background-image: url('img/binding_dark.png'); */
+    background-image: url('img/grey_wash_wall.png');
+    /* background-image: url('img/mooning.png'); */
+    padding-top: 20px;
+}
+
+input {
+    text-align: center;
+}
+
+#id_fuzzy_btn {
+    margin: 0 0 0 10px;
+}
+
+#id_exact_btn {
+    margin: 0 0 0 10px;
+}
